@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:jitsi_meet/jitsi_meet.dart';
-import 'package:zoom_clone_tutorial/resources/auth_methods.dart';
-import 'package:zoom_clone_tutorial/resources/jitsi_meet_methods.dart';
-import 'package:zoom_clone_tutorial/utils/colors.dart';
-import 'package:zoom_clone_tutorial/widgets/meeting_option.dart';
+import 'package:unio/resources/auth_methods.dart';
+import 'package:unio/resources/jitsi_meet_methods.dart';
+import 'package:unio/utils/colors.dart';
+import 'package:unio/widgets/meeting_option.dart';
 
 class VideoCallScreen extends StatefulWidget {
-  const VideoCallScreen({Key? key}) : super(key: key);
+  const VideoCallScreen({super.key});
 
   @override
   State<VideoCallScreen> createState() => _VideoCallScreenState();
@@ -34,10 +33,9 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     super.dispose();
     meetingIdController.dispose();
     nameController.dispose();
-    JitsiMeet.removeAllListeners();
   }
 
-  _joinMeeting() {
+  void _joinMeeting() {
     _jitsiMeetMethods.createMeeting(
       roomName: meetingIdController.text,
       isAudioMuted: isAudioMuted,
@@ -123,13 +121,13 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     );
   }
 
-  onAudioMuted(bool val) {
+  void onAudioMuted(bool val) {
     setState(() {
       isAudioMuted = val;
     });
   }
 
-  onVideoMuted(bool val) {
+  void onVideoMuted(bool val) {
     setState(() {
       isVideoMuted = val;
     });

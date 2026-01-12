@@ -2,11 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:zoom_clone_tutorial/utils/utils.dart';
+import 'package:unio/utils/utils.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Stream<User?> get authChanges => _auth.authStateChanges();
   User get user => _auth.currentUser!;
@@ -14,7 +15,7 @@ class AuthMethods {
   Future<bool> signInWithGoogle(BuildContext context) async {
     bool res = false;
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
@@ -48,7 +49,8 @@ class AuthMethods {
 
   void signOut() async {
     try {
-      _auth.signOut();
+      await _googleSignIn.signOut();
+      await _auth.signOut();
     } catch (e) {
       print(e);
     }

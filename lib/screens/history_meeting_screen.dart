@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:zoom_clone_tutorial/resources/firestore_methods.dart';
-import 'package:zoom_clone_tutorial/utils/colors.dart';
+import 'package:unio/resources/firestore_methods.dart';
 import 'package:intl/intl.dart';
 
 class HistoryMeetingScreen extends StatelessWidget {
-  const HistoryMeetingScreen({Key? key}) : super(key: key);
+  const HistoryMeetingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

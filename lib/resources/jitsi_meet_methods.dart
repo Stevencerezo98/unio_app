@@ -1,11 +1,12 @@
-import 'package:jitsi_meet/feature_flag/feature_flag.dart';
-import 'package:jitsi_meet/jitsi_meet.dart';
-import 'package:zoom_clone_tutorial/resources/auth_methods.dart';
-import 'package:zoom_clone_tutorial/resources/firestore_methods.dart';
+import 'package:jitsi_meet_flutter_sdk/jitsi_meet_flutter_sdk.dart';
+import 'package:unio/resources/auth_methods.dart';
+import 'package:unio/resources/firestore_methods.dart';
 
 class JitsiMeetMethods {
   final AuthMethods _authMethods = AuthMethods();
   final FirestoreMethods _firestoreMethods = FirestoreMethods();
+  // Use the singleton instance
+  final _jitsiMeet = JitsiMeet();
 
   void createMeeting({
     required String roomName,
@@ -14,25 +15,40 @@ class JitsiMeetMethods {
     String username = '',
   }) async {
     try {
-      FeatureFlag featureFlag = FeatureFlag();
-      featureFlag.welcomePageEnabled = false;
-      featureFlag.resolution = FeatureFlagVideoResolution
-          .MD_RESOLUTION; // Limit video resolution to 360p
       String name;
       if (username.isEmpty) {
         name = _authMethods.user.displayName!;
       } else {
         name = username;
       }
-      var options = JitsiMeetingOptions(room: roomName)
-        ..userDisplayName = name
-        ..userEmail = _authMethods.user.email
-        ..userAvatarURL = _authMethods.user.photoURL
-        ..audioMuted = isAudioMuted
-        ..videoMuted = isVideoMuted;
+
+      final userInfo = JitsiMeetUserInfo(
+        displayName: name,
+        email: _authMethods.user.email,
+        avatar: _authMethods.user.photoURL,
+      );
+
+      final featureFlags = {
+        'welcomepage.enabled': false,
+        'resolution': 360,
+      };
+
+      final configOverrides = {
+        'serverURL': 'https://call.unio.my',
+        'startWithAudioMuted': isAudioMuted,
+        'startWithVideoMuted': isVideoMuted,
+      };
+
+      final options = JitsiMeetConferenceOptions(
+        room: roomName,
+        userInfo: userInfo,
+        featureFlags: featureFlags,
+        configOverrides: configOverrides,
+      );
 
       _firestoreMethods.addToMeetingHistory(roomName);
-      await JitsiMeet.joinMeeting(options);
+      // Use the singleton instance to join the meeting
+      await _jitsiMeet.join(options);
     } catch (error) {
       print("error: $error");
     }

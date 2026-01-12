@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:zoom_clone_tutorial/utils/colors.dart';
+import 'package:unio/utils/colors.dart';
 
 class MeetingOption extends StatelessWidget {
   final String text;
   final bool isMute;
   final Function(bool) onChange;
   const MeetingOption({
-    Key? key,
+    super.key,
     required this.text,
     required this.isMute,
     required this.onChange,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

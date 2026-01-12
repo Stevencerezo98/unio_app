@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:zoom_clone_tutorial/utils/colors.dart';
+import 'package:unio/utils/colors.dart';
 
 class HomeMeetingButton extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData icon;
   final String text;
   const HomeMeetingButton({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.icon,
     required this.text,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

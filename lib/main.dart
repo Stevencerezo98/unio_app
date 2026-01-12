@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:zoom_clone_tutorial/resources/auth_methods.dart';
-import 'package:zoom_clone_tutorial/screens/home_screen.dart';
-import 'package:zoom_clone_tutorial/screens/login_screen.dart';
-import 'package:zoom_clone_tutorial/screens/video_call_screen.dart';
-import 'package:zoom_clone_tutorial/utils/colors.dart';
+import 'package:unio/resources/auth_methods.dart';
+import 'package:unio/screens/home_screen.dart';
+import 'package:unio/screens/login_screen.dart';
+import 'package:unio/screens/video_call_screen.dart';
+import 'package:unio/utils/colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,13 +13,13 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Zoom Clone',
+      title: 'Unio Meet',
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: backgroundColor,
       ),
